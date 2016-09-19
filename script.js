@@ -1,9 +1,10 @@
+var solution = true; // <----Do you want to see the solution in the console?
 //variables
 var num1;
 var num2;
 var num3;
 var win = 0;
-var round = 0;
+var round = 1;
 var bagles = 0;
 var arrayNum = [];
 var userArray = [];
@@ -14,6 +15,7 @@ var input1 = document.getElementById('input1');
 var input2 = document.getElementById('input2');
 var input3 = document.getElementById('input3');
 var btn = document.getElementById('btn');
+var feedback = document.getElementById('feedback');
 
 // random number
 function randomNumber() {
@@ -29,31 +31,35 @@ function createNumbers() {
   if (num2 === num1) {
       num2 = randomNumber();
   }
-  if (num3 === num2 || num3 === num1) {
+  if ((num3 === num2) || (num3 === num1)) {
       num3 = randomNumber();
   }
   arrayNum.push(num1);
   arrayNum.push(num2);
   arrayNum.push(num3);
-  // console.log("Computer numbers: " + arrayNum);
+  if (solution) {
+    console.log("Computer numbers: " + arrayNum);
+  }
 }
 
 
 function checkNum(input, num) {
 
     for (var i = 0; i < arrayNum.length; i++) {
-        // console.log("user number is " + input);
-        // console.log("array number = " + arrayNum[i], "array index = " +  (i + 1), "position user number is " + num);
+
         if (arrayNum[i] == input && (i + 1) == num) {
-          console.log("Fermi... digit correct and right position");
+          // console.log("Fermi... digit correct and right position");
+          feedback.innerHTML += "Fermi... digit correct and right position" + '<br>';
           win++;
           return;
         } else if (arrayNum[i] == input) {
-          console.log("Pico... digit correct but wrong position");
+          // console.log("Pico... digit correct but wrong position");
+          feedback.innerHTML += "Pico... digit correct but wrong position" + '<br>';
         } else {
           bagles++;
           if (bagles == 9) {
-            console.log("bagles... all wrong");
+            // console.log("bagles... all wrong");
+            feedback.innerHTML += "bagles... all wrong" + '<br>';
           }
         }
     }
@@ -63,6 +69,8 @@ createNumbers();
 
 btn.addEventListener('click', function(e) {
   e.preventDefault();
+  feedback.innerHTML += "round # " + round + '<br>';
+
   win = 0;
   bagles = 0;
   var userNum1 = input1.value;
@@ -77,16 +85,14 @@ btn.addEventListener('click', function(e) {
   checkNum(userNum2, 2);
   checkNum(userNum3, 3);
 
-  round++;
-  console.log("round # " + round);
       if (win == 3) {
-        console.log("You win! The numbers are " + arrayNum);
+        feedback.innerHTML += "You win! The numbers are " + arrayNum;
         btn.style.display = 'none';
       }
       if (round == 10) {
-        alert('Game Over... You lose!The numbers are ' + arrayNum);
+        feedback.innerHTML += 'Game Over... You lose!The numbers are ' + arrayNum;
         btn.style.display = 'none';
       }
-
     }
+    round++;
 });
