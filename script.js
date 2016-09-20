@@ -24,21 +24,22 @@ function randomNumber() {
 }
 
 function createNumbers() {
+
   num1 = randomNumber();
   num2 = randomNumber();
   num3 = randomNumber();
 
   if (num2 === num1) {
-      num2 = randomNumber();
-  }
-  if ((num3 === num2) || (num3 === num1)) {
-      num3 = randomNumber();
-  }
-  arrayNum.push(num1);
-  arrayNum.push(num2);
-  arrayNum.push(num3);
-  if (solution) {
-    console.log("Computer numbers: " + arrayNum);
+      createNumbers();
+  } else if ((num3 === num2) || (num3 === num1)) {
+    createNumbers();
+  } else {
+      arrayNum.push(num1);
+      arrayNum.push(num2);
+      arrayNum.push(num3);
+      if (solution) {
+        console.log("Computer numbers: " + arrayNum);
+      }
   }
 }
 
@@ -69,7 +70,6 @@ createNumbers();
 
 btn.addEventListener('click', function(e) {
   e.preventDefault();
-  feedback.innerHTML += "round # " + round + '<br>';
 
   win = 0;
   bagles = 0;
@@ -80,6 +80,7 @@ btn.addEventListener('click', function(e) {
   if(isNaN(userNum1) || isNaN(userNum2) || isNaN(userNum3) || (userNum1.length === 0 || userNum2.length === 0 || userNum3.length === 0)) {
     alert("is that your best shot?");
   } else {
+  feedback.innerHTML += "round # " + round + '<br>';
 
   checkNum(userNum1, 1);
   checkNum(userNum2, 2);
@@ -93,6 +94,6 @@ btn.addEventListener('click', function(e) {
         feedback.innerHTML += 'Game Over... You lose!The numbers are ' + arrayNum;
         btn.style.display = 'none';
       }
+      round++;
     }
-    round++;
 });
