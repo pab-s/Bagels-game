@@ -15,7 +15,6 @@ var input1 = document.getElementById('input1');
 var input2 = document.getElementById('input2');
 var input3 = document.getElementById('input3');
 var btn = document.getElementById('btn');
-var feedback = document.getElementById('feedback');
 
 // random number
 function randomNumber() {
@@ -78,9 +77,10 @@ btn.addEventListener('click', function(e) {
   var userNum3 = input3.value;
 
   if(isNaN(userNum1) || isNaN(userNum2) || isNaN(userNum3) || (userNum1.length === 0 || userNum2.length === 0 || userNum3.length === 0)) {
-    alert("is that your best shot?");
+    alert("Try Again!");
   } else {
-  feedback.innerHTML += "round # " + round + '<br>';
+  feedback.scrollTop = feedback.scrollHeight;
+  feedback.innerHTML += '<strong>' +  "Round # " + round + '</strong>' + '<br>';
 
   checkNum(userNum1, 1);
   checkNum(userNum2, 2);
@@ -88,10 +88,12 @@ btn.addEventListener('click', function(e) {
 
       if (win == 3) {
         feedback.innerHTML += "You win! The numbers are " + arrayNum;
+        feedback.scrollTop = feedback.scrollHeight;
         btn.style.display = 'none';
       }
-      if (round == 10) {
-        feedback.innerHTML += 'Game Over... You lose!The numbers are ' + arrayNum;
+      if (round == 20) {
+        feedback.innerHTML += 'Game Over... You lose! The numbers are ' + arrayNum;
+        feedback.scrollTop = feedback.scrollHeight;
         btn.style.display = 'none';
       }
       round++;
